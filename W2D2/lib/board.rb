@@ -4,17 +4,17 @@ class Board
   def initialize(name1, name2)
     @name1 = name1
     @name2 = name2
-    stones = [:stone,:stone,:stone,:stone]
-    temp_arr=  []
-    6.times {temp_arr << stones}
-    temp_arr << []
-    6.times {temp_arr << stones}
-    temp_arr << []
-    @cups = temp_arr
+    @cups = Array.new(14){Array.new()}
+    place_stones
   end
 
   def place_stones
-    # helper method to #initialize every non-store cup with four stones each
+    stones = [:stone,:stone,:stone,:stone]
+    @cups.each_with_index do |cup,idx|
+      next if idx == 6 || idx == 13
+
+      cup.concat(stones)
+    end
   end
 
   def valid_move?(start_pos)
@@ -25,19 +25,34 @@ class Board
   def make_move(start_pos, current_player_name)
     stones = @cups[start_pos]
     @cups[start_pos] = []
-    size = stones.size
-    stones.size.times do |i|
-      pop = stones.pop
-      @cups[start_pos + i] << [pop]
+    current_pos = start_pos
+
+    until stones.empty?
+      current_pos += 1
+      current_pos = 0 if current_pos > 13
+
+      if current_pos == 6
+        @cups[6] << stones.pop if current_player_name == @name1
+      elsif current_pos == 13
+        @cups[13] << stones.pop if current_player_name == @name2
+      else
+        @cups[current_pos] << stones.pop
+      end
+
+
     end
-    p @cups
-
-
-
+    render
+    next_turn(current_pos)
   end
 
   def next_turn(ending_cup_idx)
-    # helper method to determine what #make_move returns
+    if ending_cup_idx == 6 || ending_cup_idx == 13
+      :prompt
+    elsif @cups[ending_cup_idx].size == 1
+      :switch
+    else
+      ending_cup_idx
+    end
   end
 
   def render
@@ -49,6 +64,16 @@ class Board
   end
 
   def one_side_empty?
+    render
+
+    (0..5).all?{|i| @cups[i]}
+
+
+
+    (7..12).each do |i|
+      return false if @cups[i].any?
+    end
+
   end
 
   def winner
