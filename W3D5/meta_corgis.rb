@@ -110,19 +110,7 @@ class MetaCorgiSnacks
     snack_box.methods.grep(/^get_(.*)_info$/) { MetaCorgiSnacks.define_snack $1 }
   end
 
-  # def method_missing(name, *args)
-  #   info = @snack_box.send("get_#{name}_info", @box_id)
-  #   tastiness = @snack_box.send("get_#{name}_tastiness", @box_id)
-  #   name = "#{name.to_s.split('_').map(&:capitalize).join(' ')}"
-  #   result = "#{name}: #{info}: #{tastiness} "
-  #   tastiness > 30 ? "* #{result}" : result
-  # end
 
-  # pry(main)> load 'meta_corgis.rb'
-  # pry(main)> snack_box = SnackBox.new
-  # pry(main)> meta_snacks = MetaCorgiSnacks.new(snack_box, 1)
-  # pry(main)> meta_snacks.bone # => "Bone: Phoenician rawhide: 20 "
-  # pry(main)> meta_snacks.kibble # => "* Kibble: Delicately braised hamhocks: 33"
 
   def self.define_snack(name)
     define_method(name) do
