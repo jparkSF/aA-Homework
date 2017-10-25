@@ -1,0 +1,68 @@
+nav{
+  float: right;
+}
+
+nav ul {
+  display: inline-flex;
+}
+
+nav a {
+  float: right;
+  padding-right: 21px;
+  padding-top: 8px;
+}
+
+/* CSS Day 6 media queries */
+@media (max-width: 900px) {
+
+  [class*='col-'] {
+    width: 100%;
+  }
+
+  menu {
+    cursor: pointer;
+  }
+
+  body {
+    cursor: pointer;
+
+  }
+
+  nav ul {
+    display: none;
+  }
+
+  .hamburger-dropdown {
+    display: block;
+  }
+
+  .hamburger-dropdown ul {
+    width: 120px;
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    flex-direction: column;
+  }
+
+  .hamburger-dropdown ul li{
+    height: 40px;
+  }
+
+  .hamburger-dropdown > li {
+    background: url('hamburger.png');
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+    width: 50px;
+    height: 50px;
+    position: relative;
+  }
+
+  .hamburger-dropdown:hover ul {
+    display: flex;
+    background: #E64A19;
+  }
+
+  ul ul li:hover {
+    background: lightgreen;
+  }
+}
