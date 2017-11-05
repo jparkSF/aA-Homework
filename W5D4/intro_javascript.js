@@ -1,177 +1,129 @@
-// Phase I
-// mystery scoping
+//Phase II
 
-function mysteryScoping1() {
-  var x = 'out of block';
-  if (true) {
-    var x = 'in block';
-    console.log(x);
-  }
-  console.log(x);
-}
+const madLib = function(verb,adj,noun) {
+  console.log(`We shall ${verb.toUpperCase()} the ${adj.toUpperCase()} ${noun.toUpperCase()}.`);
+};
+// madLib('make', 'best', 'guac');
 
-mysteryScoping1(); // in block, in block
+const isSubstring = function(str, sub) {
+  console.log(str.includes(sub));
+};
 
-function mysteryScoping2() {
-  const x = 'out of block';
-  if (true) {
-    const x = 'in block';
-    console.log(x);
-  }
-  console.log(x);
-}
+// isSubstring("time to program", "time");
+// isSubstring("Jump for joy", "joys");
 
-mysteryScoping2(); // in block, out of block
+const fizzBuzz = function(array){
+  let newArray = [];
+  array.forEach(function(el){
 
-function mysteryScoping3() {
-  const x = 'out of block';
-  if (true) {
-    var x = 'in block';
-    console.log(x);
-  }
-  console.log(x);
-}
-
-mysteryScoping3(); // SyntaxError
-
-function mysteryScoping4() {
-  let x = 'out of block';
-  if (true) {
-    let x = 'in block';
-    console.log(x);
-  }
-  console.log(x);
-}
-
-mysteryScoping4(); // in block, out of block
-
-function mysteryScoping5() {
-  let x = 'out of block';
-  if (true) {
-    let x = 'in block';
-    console.log(x);
-  }
-  let x = 'out of block again';
-  console.log(x);
-}
-
-mysteryScoping5(); // SyntaxError
-
-// madLib
-
-function madLib(verb, adj, noun) {
-  return `We shall ${verb.toUpperCase()} the ${adj.toUpperCase()} ${noun.toUpperCase()}.`
-}
-
-// isSubstring
-
-function isSubstring(phrase, subphrase) {
-  return phrase.includes(subphrase);
-}
-
-// Phase II
-
-// fizzBuzz
-
-function fizzBuzz (array) {
-  const fizzBuzzArr = [];
-
-  array.forEach(el => {
-    if ((el % 3 === 0) ^ (el % 5 === 0)) {
-      fizzBuzzArr.push(el);
+    if (el % 3 === 0 ^ el % 5 === 0){
+      newArray.push(el);
     }
   });
+  return newArray;
+};
+// fizzBuzz([1,2,3,4,5,6,7,8,9,15]);
 
-  return fizzBuzzArr;
-}
 
-// isPrime
-
-function isPrime (n) {
-  if (n < 2) { return false; }
-
+const isPrime = function(n) {
   for (let i = 2; i < n; i++) {
     if (n % i === 0) {
       return false;
     }
   }
-
   return true;
-}
+};
 
-// sumOfNPrimes
+// isPrime(13);
 
-function sumOfNPrimes (n) {
+const sumOfNPrimes = function(n) {
   let sum = 0;
-  let countPrimes = 0;
+  let primeCounter = 0;
   let i = 2;
 
-  while (countPrimes < n) {
-    if (isPrime(i)) {
+  while(primeCounter < n){
+    if (isPrime(i)){
       sum += i;
-      countPrimes++;
+      primeCounter++;
     }
     i++;
   }
-
   return sum;
-}
-
-
-// Phase I - Callbacks
-
-// defining the function
-function titleize(names, callback) {
-  let titleized = names.map(name => `Mx. ${name} Jingleheimer Schmidt`);
-  callback(titleized);
 };
 
-// invoking the function
-titleize(["Mary", "Brian", "Leo"], (names) => {
-  names.forEach(name => console.log(name));
-});
+// sumOfNPrimes(4);
 
-// Phase II - Constructors, Prototypes, and `this`
+const nameArray = ["Mary", "Brian", "Leo"];
+const titleize = (names,cb) => {
+  let titleized = names.map(name => cb(name));
+};
 
-function Elephant(name, height, tricks) {
+const cb = (name) => console.log(`Mx. ${name} Jingleheimer Schmidt`);
+
+// titleize(nameArray, cb);
+
+//Phase III
+
+const Elephant = function(name, height, tricks){
   this.name = name;
   this.height = height;
   this.tricks = tricks;
-}
+};
 
-Elephant.prototype.trumpet = function () {
+Elephant.prototype.trumpet = function(){
   console.log(`${this.name} the elephant goes 'phrRRRRRRRRRRR!!!!!!!'`);
 };
 
-Elephant.prototype.grow = function () {
-  this.height = this.height + 12;
+Elephant.prototype.grow = function(){
+  this.height += 12;
+  console.log(this.height);
 };
 
-Elephant.prototype.addTrick = function (trick) {
-  this.tricks.push(trick);
+Elephant.prototype.play = function(){
+  let randIndex = Math.floor(Math.random() * this.tricks.length);
+  console.log(`${this.name} is this.tricks[${randIndex}]`);
 };
 
-Elephant.prototype.play = function () {
-  trickIndex = Math.floor(Math.random() * this.tricks.length);
-  console.log(`${this.name} is ${this.tricks[trickIndex]}!`);
+Elephant.prototype.addTricks = function(newTrick) {
+  this.tricks.push(newTrick);
+  return this.tricks;
 };
 
-// Phase III - Function Invocation
-
-Elephant.paradeHelper = function (elephant) {
+Elephant.prototype.paradeHelper = function(elephant){
   console.log(`${elephant.name} is trotting by!`);
 };
 
 
+let ellie = new Elephant("Ellie", 185,
+            ["giving human friends a ride", "playing hide and seek"]);
+let charlie = new Elephant("Charlie", 200,
+            ["painting pictures", "spraying water for a slip and slide"]);
+let kate = new Elephant("Kate", 234,
+            ["writing letters", "stealing peanuts"]);
+let micah = new Elephant("Micah", 143,
+            ["trotting", "playing tic tac toe", "doing elephant ballet"]);
 
-// Phase IV - Closures
+let herd = [ellie, charlie, kate, micah];
 
-function dinerBreakfast() {
-  let order = "I'd like cheesy scrambled eggs please.";
-  console.log(order);
+// herd.forEach(function(elephant){
+//   elephant.paradeHelper(elephant);
+// });
 
-  return function (food) {
-    order = `${order.slice(0, order.length - 8)} and ${food} please.`;
-    console.log(order);
+// Phase IV
+
+
+
+const dinerBreakfast = function(){
+  let menuArray = ['scrambled eggs bacon'];
+
+  return (food) => {
+    menuArray.push(food);
+    let newOrder = `I'd like ${menuArray.join(" and ")} please.`;
+    console.log(newOrder);
   };
 };
+
+let bfastOrder = dinerBreakfast();
+// bfastOrder();
+// bfastOrder("chocolate chip pancakes");
+// bfastOrder("grits");

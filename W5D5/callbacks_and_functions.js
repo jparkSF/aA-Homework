@@ -7,7 +7,9 @@ window.setTimeout(function () {
 function hammerTime (time) {
   window.setTimeout(function () {
     alert(`${time} is HAMMER TIME!`);
+
   });
+
 }
 
 // Some tea? Some biscuits?
