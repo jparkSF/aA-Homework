@@ -30,3 +30,14 @@ function teaAndBiscuits () {
 }
 
 teaAndBiscuits();
+
+
+function Dog(name){
+  this.name = name;
+}
+
+let dog = new Dog('fido');
+
+Dog.prototype.woof = function(){
+  console.log('woof!');
+};
