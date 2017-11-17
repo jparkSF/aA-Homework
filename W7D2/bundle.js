@@ -11818,10 +11818,11 @@ var _app2 = _interopRequireDefault(_app);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Root = function Root() {
+var Root = function Root(_ref) {
+  var store = _ref.store;
   return _react2.default.createElement(
     _reactRedux.Provider,
-    null,
+    { store: store },
     _react2.default.createElement(_app2.default, null)
   );
 };
